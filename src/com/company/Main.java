@@ -6,15 +6,24 @@ import java.util.Scanner;
 public class Main {
 
   Print printer = new Print();
+  int[] theCorretAnswer = new int[4];
+  int[] playerAnswer = new int[4];
   Scanner keyboard = new Scanner(System.in);
 
   public void menu() {
+
     printer.printMainMenu();
     int choise = chooseAnswer();
 
     switch (choise) {
-      case 1 -> startGame();
-      case 2 -> System.out.println("Exit program");
+      case 1 -> {
+        printer.betweenOptions();
+        startGame();
+      }
+      case 2 -> {
+        printer.betweenOptions();
+        System.out.println("Exit program");
+      }
       default -> {
         printer.betweenOptions();
         menu();
@@ -29,18 +38,17 @@ public class Main {
 
   public void startGame() {
 
-    printer.betweenOptions();
-
     printer.startGameOptions();
     int choice = chooseAnswer();
     switch (choice) {
       case 1 -> {
-          printer.betweenOptions();
-          computerSetAnswer();
+        printer.printTheCorretCode();
+        setTheCorrectAnswerArray();
+        playerTurn();
       }
       case 2 -> {
-          printer.betweenOptions();
-          System.out.println("2: You set answer");
+        printer.betweenOptions();
+        System.out.println("2: computer set answer");
       }
       default -> {
         printer.betweenOptions();
@@ -48,42 +56,48 @@ public class Main {
       }
     }
 
-
   }
 
-  public int[] computerSetAnswer() {
-    System.out.println("Computer sets answer: 1 2 3 4");
-    int[] corretAnswer = {1, 2, 3, 4};
+  public void setTheCorrectAnswerArray() {
+    setsAnswer(theCorretAnswer);
+  }
 
-    return corretAnswer;
+  public int[] setsAnswer(int[] answerArray) {
 
+    for (int i = 0; i < answerArray.length; i++) {
+      printer.chooseNumber(i);
+      answerArray[i] = chooseAnswer();
+    }
+    return answerArray;
   }
 
   public void playerTurn() {
-    System.out.println("Players turn");
-    playerAnswer();
-    isPlayerAnswerCorrect(computerSetAnswer(), playerAnswer());
+
+    printer.printPlayerturn();
+    setsAnswer(playerAnswer);
+
+    isPlayerAnswerCorrect(theCorretAnswer, playerAnswer);
 
 
   }
 
-  public int[] playerAnswer() {
-    System.out.println("player answer: 1, 2, 3, 4");
-    int[] playerAnswer = {1, 2, 3, 4};
-    return playerAnswer;
-  }
+//  public int[] playerAnswer() {
+//    System.out.println("player answer: 1, 2, 3, 4");
+//    int[] playerAnswer = {1, 2, 3, 4};
+//    return playerAnswer;
+//  }
 
   public void isPlayerAnswerCorrect(int[] corretAnswerArray, int[] playerAnswerArray) {
-    System.out.println("Is answer correct? Y/N");
+
     if (Arrays.equals(corretAnswerArray, playerAnswerArray)) {
-      System.out.println("Congratulations!");
+      printer.youWin();
     } else {
-      System.out.println("This does not work");
       anyMatchesInAnswer();
     }
   }
 
   public void anyMatchesInAnswer() {
+    System.out.println();
     System.out.println("Checking if there is any correct answers? Y/N");
   }
 
