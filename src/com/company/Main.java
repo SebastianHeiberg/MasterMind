@@ -8,7 +8,12 @@ public class Main {
   Print printer = new Print();
   int[] theCorretAnswer = new int[4];
   int[] playerAnswer = new int[4];
+  int[] matchesArray = new int[4];
+  boolean hasWon = false;
   Scanner keyboard = new Scanner(System.in);
+  int roundCount = 0;
+  int roundLimit = 10;
+  int [][] playerHistory = new int [4][10];
 
   public void menu() {
 
@@ -31,11 +36,6 @@ public class Main {
     }
   }
 
-  public int chooseAnswer() {
-    int chooseAnswer = keyboard.nextInt();
-    return chooseAnswer;
-  }
-
   public void startGame() {
 
     printer.startGameOptions();
@@ -43,12 +43,12 @@ public class Main {
     switch (choice) {
       case 1 -> {
         printer.printTheCorretCode();
-        setTheCorrectAnswerArray();
+        playerSetTheCorrectAnswerArray();
         playerTurn();
       }
       case 2 -> {
-        printer.betweenOptions();
-        System.out.println("2: computer set answer");
+        autoSetTheCorrectAnswerArray();
+        playerTurn();
       }
       default -> {
         printer.betweenOptions();
@@ -58,8 +58,20 @@ public class Main {
 
   }
 
-  public void setTheCorrectAnswerArray() {
+  public int chooseAnswer() {
+    int chooseAnswer = keyboard.nextInt();
+    return chooseAnswer;
+  }
+
+  public void playerSetTheCorrectAnswerArray() {
     setsAnswer(theCorretAnswer);
+  }
+
+  public void autoSetTheCorrectAnswerArray() {
+    for (int i = 0; i < theCorretAnswer.length; i++) {
+      int a = (int) (1 + (Math.random() * 4));
+      theCorretAnswer[i] = a;
+    }
   }
 
   public int[] setsAnswer(int[] answerArray) {
@@ -68,6 +80,7 @@ public class Main {
       printer.chooseNumber(i);
       answerArray[i] = chooseAnswer();
     }
+
     return answerArray;
   }
 
@@ -78,33 +91,79 @@ public class Main {
 
     isPlayerAnswerCorrect(theCorretAnswer, playerAnswer);
 
-
+    if (hasWon) {
+      printer.youWin();
+    } else {
+      anyMatchesInPositionsAndValues();
+      anyMathcesInCorrectValuesOnly();
+      addArrayToGameHistory();
+      printer.printHistory(roundCount,playerHistory);
+      increaseRoundCount();
+      playerTurn();
+    }
   }
 
-//  public int[] playerAnswer() {
-//    System.out.println("player answer: 1, 2, 3, 4");
-//    int[] playerAnswer = {1, 2, 3, 4};
-//    return playerAnswer;
-//  }
+  public void addArrayToGameHistory () {
+
+    for (int i = 0; i < roundCount; i++) {
+      for (int j = 0; j < playerAnswer.length; j++) {
+        playerHistory [i][j] = playerAnswer[j];
+      }
+    }
+  }
 
   public void isPlayerAnswerCorrect(int[] corretAnswerArray, int[] playerAnswerArray) {
 
     if (Arrays.equals(corretAnswerArray, playerAnswerArray)) {
-      printer.youWin();
-    } else {
-      anyMatchesInAnswer();
+      hasWon = true;
     }
   }
 
-  public void anyMatchesInAnswer() {
-    System.out.println();
-    System.out.println("Checking if there is any correct answers? Y/N");
+  public void increaseRoundCount () {
+    roundCount ++;
+  }
+  public void anyMatchesInPositionsAndValues() {
+
+    int correctMatches = 0;
+
+    for (int i = 0; i < 4; i++) {
+
+      if (theCorretAnswer[i] == playerAnswer[i]) {
+        correctMatches += 1;
+        matchesArray[i] = 0;
+      } else {
+        matchesArray[i] = playerAnswer[i];
+      }
+
+    }
+    printer.printMatchesPositionAndValue(correctMatches);
+
+
   }
 
+  public void anyMathcesInCorrectValuesOnly() {
+
+    int correctValueCount = 0;
+    boolean dontCountTwice;
+
+    for (int i = 0; i < 4; i++) {
+      dontCountTwice = false;
+      for (int j = 0; j < 4; j++) {
+
+        if ((matchesArray[i] == theCorretAnswer[j]) & !dontCountTwice) {
+          correctValueCount += 1;
+          dontCountTwice = true;
+
+        }
+      }
+    }
+    printer.printMatchesValueOnly(correctValueCount);
+
+  }
 
   public static void main(String[] args) {
-
-    new Main().menu();
+    Main obj = new Main();
+    obj.menu();
 
 
   }
