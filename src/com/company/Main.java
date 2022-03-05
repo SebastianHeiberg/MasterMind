@@ -7,6 +7,7 @@ public class Main {
 
   Print printer = new Print();
   int[] theCorretAnswer = new int[4];
+  int[] theCorretAnswerValueCompare = new int[4];
   int[] playerAnswer = new int[4];
   int[] matchesArray = new int[4];
   boolean hasWon = false;
@@ -96,8 +97,8 @@ public class Main {
     } else {
       anyMatchesInPositionsAndValues();
       anyMathcesInCorrectValuesOnly();
-      addArrayToGameHistory();
-      printer.printHistory(roundCount,playerHistory);
+      //addArrayToGameHistory();
+      //printer.printHistory(roundCount,playerHistory);
       increaseRoundCount();
       playerTurn();
     }
@@ -122,6 +123,7 @@ public class Main {
   public void increaseRoundCount () {
     roundCount ++;
   }
+
   public void anyMatchesInPositionsAndValues() {
 
     int correctMatches = 0;
@@ -131,8 +133,11 @@ public class Main {
       if (theCorretAnswer[i] == playerAnswer[i]) {
         correctMatches += 1;
         matchesArray[i] = 0;
+        theCorretAnswerValueCompare[i] = -1;
       } else {
         matchesArray[i] = playerAnswer[i];
+        theCorretAnswerValueCompare[i] = theCorretAnswer[i];
+
       }
 
     }
@@ -142,22 +147,27 @@ public class Main {
   }
 
   public void anyMathcesInCorrectValuesOnly() {
-
+    boolean dontRepeatCount;
     int correctValueCount = 0;
-    boolean dontCountTwice;
 
     for (int i = 0; i < 4; i++) {
-      dontCountTwice = false;
+      dontRepeatCount = true;
       for (int j = 0; j < 4; j++) {
 
-        if ((matchesArray[i] == theCorretAnswer[j]) & !dontCountTwice) {
+        if (matchesArray[j] == theCorretAnswerValueCompare[i] & dontRepeatCount) {
           correctValueCount += 1;
-          dontCountTwice = true;
+          theCorretAnswerValueCompare [i] = -1;
+          matchesArray [j] = 0;
+          dontRepeatCount = false;
 
         }
       }
     }
     printer.printMatchesValueOnly(correctValueCount);
+//    System.out.println("player "+ Arrays.toString(playerAnswer));
+//    System.out.println("correct " + Arrays.toString(theCorretAnswer));
+//    System.out.println("matches" + Arrays.toString(matchesArray));
+//    System.out.println("valuecompare "+ Arrays.toString(theCorretAnswerValueCompare));
 
   }
 
