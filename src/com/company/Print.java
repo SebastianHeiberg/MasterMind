@@ -38,6 +38,9 @@ public class Print {
   public void printPlayerturn() {
     betweenOptions();
     System.out.println("Players turn");
+  }
+  public void printEnterNumbers () {
+    System.out.println();
     System.out.println("You can now try to guess the secret code.");
   }
 
@@ -63,8 +66,12 @@ public class Print {
           \nThe %d round - | %d | %d | %d | %d |\t-\t""",i+1,playerHistory[i][0], playerHistory[i][1],playerHistory[i][2], playerHistory[i][3]);
       System.out.print("X ".repeat(corretvalue[i])+"O ".repeat(correctplacement[i]));
     }
+    System.out.println();
   }
 
+  public void displayHistory () {
+    System.out.print("Enter 1 if you want to display round history, else enter 2 to guess again. ");
+  }
   public void playerLost () {
     System.out.println("Game over");
   }

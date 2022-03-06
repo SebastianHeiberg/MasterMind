@@ -87,9 +87,19 @@ public class Main {
     return answerArray;
   }
 
+  public void displayHistory () {
+    printer.displayHistory();
+    int chooseAnswer = chooseAnswer();
+    if (chooseAnswer == 1) {
+      printer.printHistory(roundCount, playerHistory, correctPlaceAndValue, correctValueWrongPlace);
+    }
+  }
+
   public void playerTurn() {
 
     printer.printPlayerturn();
+    displayHistory();
+    printer.printEnterNumbers();
     setsAnswer(playerAnswer);
 
     isPlayerAnswerCorrect(theCorretAnswer, playerAnswer);
@@ -102,7 +112,7 @@ public class Main {
       anyMatchesInPositionsAndValues();
       anyMathcesInCorrectValuesOnly();
       addArrayToGameHistory();
-      printer.printHistory(roundCount,playerHistory,correctPlaceAndValue,correctValueWrongPlace);
+
       increaseRoundCount();
       playerTurn();
     }
@@ -145,7 +155,7 @@ public class Main {
       }
 
     }
-  //  printer.printMatchesPositionAndValue(correctMatches);
+    printer.printMatchesPositionAndValue(correctMatches);
     correctPlaceAndValue [roundCount] = correctMatches;
 
 
@@ -168,7 +178,7 @@ public class Main {
         }
       }
     }
-   // printer.printMatchesValueOnly(correctValueCount);
+    printer.printMatchesValueOnly(correctValueCount);
     correctValueWrongPlace [roundCount] = correctValueCount;
 
 
