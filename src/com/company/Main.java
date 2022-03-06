@@ -14,7 +14,9 @@ public class Main {
   Scanner keyboard = new Scanner(System.in);
   int roundCount = 0;
   int roundLimit = 10;
-  int [][] playerHistory = new int [4][10];
+  int [][] playerHistory = new int [10][4];
+  int [] correctPlaceAndValue = new int[10];
+  int [] correctValueWrongPlace = new int[10];
 
   public void menu() {
 
@@ -92,13 +94,15 @@ public class Main {
 
     isPlayerAnswerCorrect(theCorretAnswer, playerAnswer);
 
-    if (hasWon) {
+    if (roundCount == 10) {
+      printer.playerLost();
+    } else if (hasWon) {
       printer.youWin();
     } else {
       anyMatchesInPositionsAndValues();
       anyMathcesInCorrectValuesOnly();
-      //addArrayToGameHistory();
-      //printer.printHistory(roundCount,playerHistory);
+      addArrayToGameHistory();
+      printer.printHistory(roundCount,playerHistory,correctPlaceAndValue,correctValueWrongPlace);
       increaseRoundCount();
       playerTurn();
     }
@@ -106,8 +110,8 @@ public class Main {
 
   public void addArrayToGameHistory () {
 
-    for (int i = 0; i < roundCount; i++) {
-      for (int j = 0; j < playerAnswer.length; j++) {
+    for (int i = 0+roundCount; i < roundCount+1; i++) {
+      for (int j = 0; j < 4; j++) {
         playerHistory [i][j] = playerAnswer[j];
       }
     }
@@ -141,7 +145,8 @@ public class Main {
       }
 
     }
-    printer.printMatchesPositionAndValue(correctMatches);
+  //  printer.printMatchesPositionAndValue(correctMatches);
+    correctPlaceAndValue [roundCount] = correctMatches;
 
 
   }
@@ -163,11 +168,9 @@ public class Main {
         }
       }
     }
-    printer.printMatchesValueOnly(correctValueCount);
-//    System.out.println("player "+ Arrays.toString(playerAnswer));
-//    System.out.println("correct " + Arrays.toString(theCorretAnswer));
-//    System.out.println("matches" + Arrays.toString(matchesArray));
-//    System.out.println("valuecompare "+ Arrays.toString(theCorretAnswerValueCompare));
+   // printer.printMatchesValueOnly(correctValueCount);
+    correctValueWrongPlace [roundCount] = correctValueCount;
+
 
   }
 

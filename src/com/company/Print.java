@@ -25,13 +25,14 @@ public class Print {
   }
 
   public void startGameOptions() {
-    System.out.println("1: You set the answer");
-    System.out.println("2: Let computer set answer");
+    System.out.println("You now have to decide, how the 4 diget secret code gets set.");
+    System.out.println("1: You set the code");
+    System.out.println("2: Let computer set the code");
     System.out.print("Enter choice here: ");
   }
 
   public void chooseNumber(int number) {
-    System.out.print("Choose the " + (number + 1) + " number of 4: ");
+    System.out.print("Enter the " + (number + 1) + " diget out of 4: ");
   }
 
   public void printPlayerturn() {
@@ -54,13 +55,18 @@ public class Print {
     System.out.println("You had " + number + " correct mathces in value only.");
   }
 
-  public void printHistory (int roundcount, int [][] playerHistory) {
+  public void printHistory (int roundcount, int [][] playerHistory, int [] corretvalue, int [] correctplacement) {
+    System.out.println();
+    System.out.println("A correct placement/value = X and a corret value only = O ");
     for (int i = 0; i < roundcount+1 ; i++) {
-      System.out.println("\nThe " + (i+1) + " round your answer was: ");
-      for (int j = 0; j < 4; j++) {
-        System.out.print(playerHistory[i][j] + " ");
-      }
+      System.out.printf("""
+          \nThe %d round - | %d | %d | %d | %d |\t-\t""",i+1,playerHistory[i][0], playerHistory[i][1],playerHistory[i][2], playerHistory[i][3]);
+      System.out.print("X ".repeat(corretvalue[i])+"O ".repeat(correctplacement[i]));
     }
+  }
+
+  public void playerLost () {
+    System.out.println("Game over");
   }
 
 }
