@@ -61,7 +61,7 @@ public class Print {
   public void printHistory (int roundcount, int [][] playerHistory, int [] corretvalue, int [] correctplacement) {
     System.out.println();
     System.out.println("A correct placement/value = X and a corret value only = O ");
-    for (int i = 0; i < roundcount+1 ; i++) {
+    for (int i = 0; i < roundcount ; i++) {
       System.out.printf("""
           \nThe %d round - | %d | %d | %d | %d |\t-\t""",i+1,playerHistory[i][0], playerHistory[i][1],playerHistory[i][2], playerHistory[i][3]);
       System.out.print("X ".repeat(corretvalue[i])+"O ".repeat(correctplacement[i]));

@@ -6,17 +6,17 @@ import java.util.Scanner;
 public class Main {
 
   Print printer = new Print();
+  Scanner keyboard = new Scanner(System.in);
+  int roundCount = 0;
+  int roundLimit = 10;
   int[] theCorretAnswer = new int[4];
   int[] theCorretAnswerValueCompare = new int[4];
   int[] playerAnswer = new int[4];
   int[] matchesArray = new int[4];
+  int[] correctPlaceAndValue = new int[10];
+  int[] correctValueWrongPlace = new int[10];
+  int[][] playerHistory = new int[10][4];
   boolean hasWon = false;
-  Scanner keyboard = new Scanner(System.in);
-  int roundCount = 0;
-  int roundLimit = 10;
-  int [][] playerHistory = new int [10][4];
-  int [] correctPlaceAndValue = new int[10];
-  int [] correctValueWrongPlace = new int[10];
 
   public void menu() {
 
@@ -87,7 +87,7 @@ public class Main {
     return answerArray;
   }
 
-  public void displayHistory () {
+  public void displayHistory() {
     printer.displayHistory();
     int chooseAnswer = chooseAnswer();
     if (chooseAnswer == 1) {
@@ -118,11 +118,11 @@ public class Main {
     }
   }
 
-  public void addArrayToGameHistory () {
+  public void addArrayToGameHistory() {
 
-    for (int i = 0+roundCount; i < roundCount+1; i++) {
+    for (int i = 0 + roundCount; i < roundCount + 1; i++) {
       for (int j = 0; j < 4; j++) {
-        playerHistory [i][j] = playerAnswer[j];
+        playerHistory[i][j] = playerAnswer[j];
       }
     }
   }
@@ -134,8 +134,8 @@ public class Main {
     }
   }
 
-  public void increaseRoundCount () {
-    roundCount ++;
+  public void increaseRoundCount() {
+    roundCount++;
   }
 
   public void anyMatchesInPositionsAndValues() {
@@ -156,7 +156,7 @@ public class Main {
 
     }
     printer.printMatchesPositionAndValue(correctMatches);
-    correctPlaceAndValue [roundCount] = correctMatches;
+    correctPlaceAndValue[roundCount] = correctMatches;
 
 
   }
@@ -171,15 +171,15 @@ public class Main {
 
         if (matchesArray[j] == theCorretAnswerValueCompare[i] & dontRepeatCount) {
           correctValueCount += 1;
-          theCorretAnswerValueCompare [i] = -1;
-          matchesArray [j] = 0;
+          theCorretAnswerValueCompare[i] = -1;
+          matchesArray[j] = 0;
           dontRepeatCount = false;
 
         }
       }
     }
     printer.printMatchesValueOnly(correctValueCount);
-    correctValueWrongPlace [roundCount] = correctValueCount;
+    correctValueWrongPlace[roundCount] = correctValueCount;
 
 
   }
