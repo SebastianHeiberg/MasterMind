@@ -89,7 +89,6 @@ public class GameEngine {
     }
   }
 
-
   public void displayHistory() {
     printer.displayHistory();
     int chooseAnswer = chooseAnswer();
@@ -125,7 +124,6 @@ public class GameEngine {
       }
     }
   }
-
 
   public void isPlayerAnswerCorrect(int[] corretAnswerArray, int[] playerAnswerArray) {
 
