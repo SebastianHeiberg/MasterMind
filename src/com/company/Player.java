@@ -10,8 +10,10 @@ public class Player {
     this.playerHistory = new int[10][4];
   }
 
-  public void addToPlayerHistory () {
-
+  public void addToPlayerHistory (int roundCount) {
+     for (int i = roundCount; i < roundCount + 1; i++) {
+       System.arraycopy(playerAnswer, 0, playerHistory[i], 0, 4);
+    }
   }
 
   public int[][] getPlayerHistory() {
@@ -27,12 +29,6 @@ public class Player {
     }
   }
 
-//  public void addArrayToGameHistory() {
 //
-//    for (int i = 0 + roundCount; i < roundCount + 1; i++) {
-//      for (int j = 0; j < 4; j++) {
-//        playerHistory[i][j] = playerAnswer[j];
-//      }
-//    }
 
 

@@ -8,7 +8,8 @@ public class Print {
 
   public void printTheCorretCode() {
     betweenOptions();
-    System.out.println("You must first make the secret code, witch consists of 4 digits.");
+    System.out.println("You must first make the secret code." +
+        "\nThe code consists of 4 digits, with a value between 1 and 4.");
 
   }
 

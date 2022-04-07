@@ -11,6 +11,7 @@ public class GameEngine {
   public final Opponent theComputer = new Opponent();
   public int roundCount = 0;
   public final int roundLimit = 10;
+  public final int answerLength = 4;
 
   public int[] theCorretAnswerValueCompare = new int[4];
   public int[] matchesArray = new int[4];
@@ -48,17 +49,17 @@ public class GameEngine {
       case 1 -> {
         printer.printTheCorretCode();
         playerSetTheCorrectAnswerArray();
-        playerTurn();
       }
       case 2 -> {
         theComputer.autoSetTheCorrectAnswerArray();
-        playerTurn();
       }
       default -> {
         printer.betweenOptions();
         menu();
       }
     }
+
+    playerTurn();
 
   }
 
@@ -67,22 +68,26 @@ public class GameEngine {
     return chooseAnswer;
   }
 
-  public void playerSetTheCorrectAnswerArray(){
+  private void playerSetTheCorrectAnswerArray() {
+
+    for (int i = 0; i < answerLength; i++) {
+      printer.chooseNumber(i);
+      int valueInArray = chooseAnswer();
+      theComputer.manualySetTheCorrectAnswerArray(i, valueInArray);
+
+    }
+  }
+
+  private void playerSetThePlayerAnswerArray() {
     int answerLength = 4;
 
     for (int i = 0; i < answerLength; i++) {
       printer.chooseNumber(i);
       int valueInArray = chooseAnswer();
-      thePlayer.setsPlayerAnswerArray(i,valueInArray);
+      thePlayer.setsPlayerAnswerArray(i, valueInArray);
 
     }
   }
-
-
-
-
-
-
 
 
   public void displayHistory() {
@@ -95,27 +100,31 @@ public class GameEngine {
 
   public void playerTurn() {
 
-    printer.printPlayerturn();
-    displayHistory();
-    printer.printEnterNumbers();
-//    thePlayer.setsAnswer();
+    while (!hasWon) {
 
-    isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
+      printer.printPlayerturn();
 
-    if (roundCount == 10) {
-      printer.playerLost();
-    } else if (hasWon) {
-      printer.youWin();
-    } else {
-//      anyMatchesInPositionsAndValues();
-      anyMathcesInCorrectValuesOnly();
-  //    addArrayToGameHistory();
+      if (roundCount != 0) {
+        displayHistory();
+      }
 
-      increaseRoundCount();
-      playerTurn();
+      printer.printEnterNumbers();
+      playerSetThePlayerAnswerArray();
+
+      isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
+
+      if (roundCount == 10) {
+        printer.playerLost();
+      } else if (hasWon) {
+        printer.youWin();
+      } else {
+        anyMatchesInPositionsAndValues();
+        anyMathcesInCorrectValuesOnly();
+        thePlayer.addToPlayerHistory(roundCount);
+        increaseRoundCount();
+      }
     }
   }
-
 
 
   public void isPlayerAnswerCorrect(int[] corretAnswerArray, int[] playerAnswerArray) {
@@ -129,56 +138,47 @@ public class GameEngine {
     roundCount++;
   }
 
-//  public void anyMatchesInPositionsAndValues() {
-//
-//    int correctMatches = 0;
-//
-//    for (int i = 0; i < 4; i++) {
-//
-//      if (theCorretAnswer[i] == playerAnswer[i]) {
-//        correctMatches += 1;
-//        matchesArray[i] = 0;
-//        theCorretAnswerValueCompare[i] = -1;
-//      } else {
-//        matchesArray[i] = playerAnswer[i];
-//        theCorretAnswerValueCompare[i] = theCorretAnswer[i];
-//
-//      }
-//
-//    }
-//    printer.printMatchesPositionAndValue(correctMatches);
-//    correctPlaceAndValue[roundCount] = correctMatches;
-//
-//
-//  }
+  public void anyMatchesInPositionsAndValues() {
+    int correctMatches = 0;
+
+    for (int i = 0; i < 4; i++) {
+
+      if (theComputer.getTheCorretAnswer()[i] == thePlayer.getPlayerAnswer()[i]) {
+        correctMatches += 1;
+        matchesArray[i] = 0;
+        theCorretAnswerValueCompare[i] = -1;
+      } else {
+        matchesArray[i] = thePlayer.getPlayerAnswer()[i];
+        theCorretAnswerValueCompare[i] = theComputer.getTheCorretAnswer()[i];
+      }
+    }
+    printer.printMatchesPositionAndValue(correctMatches);
+    correctPlaceAndValue[roundCount] = correctMatches;
+  }
 
   public void anyMathcesInCorrectValuesOnly() {
     boolean dontRepeatCount;
     int correctValueCount = 0;
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < answerLength; i++) {
       dontRepeatCount = true;
-      for (int j = 0; j < 4; j++) {
+      for (int j = 0; j < answerLength; j++) {
 
         if (matchesArray[j] == theCorretAnswerValueCompare[i] & dontRepeatCount) {
           correctValueCount += 1;
           theCorretAnswerValueCompare[i] = -1;
           matchesArray[j] = 0;
           dontRepeatCount = false;
-
         }
       }
     }
     printer.printMatchesValueOnly(correctValueCount);
     correctValueWrongPlace[roundCount] = correctValueCount;
-
-
   }
+
 
   public static void main(String[] args) {
     GameEngine obj = new GameEngine();
     obj.menu();
-
-
   }
 }
