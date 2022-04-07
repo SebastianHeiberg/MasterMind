@@ -32,7 +32,7 @@ public class Print {
   }
 
   public void chooseNumber(int number) {
-    System.out.print("Enter the " + (number + 1) + " diget out of 4: ");
+    System.out.print("Enter the value of the " + (number + 1) + " diget out of 4: ");
   }
 
   public void printPlayerturn() {
