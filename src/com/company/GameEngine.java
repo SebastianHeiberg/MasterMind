@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class GameEngine {
 
-  public final Print printer = new Print();
+  public final UI ui = new UI();
   public final Scanner keyboard = new Scanner(System.in);
   public final Player thePlayer = new Player();
   public final Opponent theComputer = new Opponent();
@@ -15,21 +15,21 @@ public class GameEngine {
 
   public void menu() {
 
-    printer.printMainMenu();
+    ui.displayMainMenu();
     int choise = chooseAnswer();
 
 
     switch (choise) {
       case 1 -> {
-        printer.betweenOptions();
+        ui.displayBetweenOptions();
         startGame();
       }
       case 2 -> {
-        printer.betweenOptions();
+        ui.displayBetweenOptions();
         System.out.println("Exit program");
       }
       default -> {
-        printer.betweenOptions();
+        ui.displayBetweenOptions();
         menu();
       }
     }
@@ -37,18 +37,18 @@ public class GameEngine {
 
   private void startGame() {
 
-    printer.startGameOptions();
+    ui.displayStartGameOptions();
     int choice = chooseAnswer();
     switch (choice) {
       case 1 -> {
-        printer.printTheCorretCode();
+        ui.displayTheCorretCode();
         playerSetTheCorrectAnswerArray();
       }
       case 2 -> {
         theComputer.autoSetTheCorrectAnswerArray();
       }
       default -> {
-        printer.betweenOptions();
+        ui.displayBetweenOptions();
         menu();
       }
     }
@@ -65,7 +65,7 @@ public class GameEngine {
   private void playerSetTheCorrectAnswerArray() {
 
     for (int i = 0; i < 4; i++) {
-      printer.chooseNumber(i);
+      ui.displayChooseNumber(i);
       int valueInArray = chooseAnswer();
       theComputer.manualySetTheCorrectAnswerArray(i, valueInArray);
 
@@ -76,7 +76,7 @@ public class GameEngine {
     int answerLength = 4;
 
     for (int i = 0; i < answerLength; i++) {
-      printer.chooseNumber(i);
+      ui.displayChooseNumber(i);
       int valueInArray = chooseAnswer();
       thePlayer.setsPlayerAnswerArray(i, valueInArray);
 
@@ -84,10 +84,10 @@ public class GameEngine {
   }
 
   private void displayHistory() {
-    printer.displayHistory();
+    ui.displayHistory();
     int chooseAnswer = chooseAnswer();
     if (chooseAnswer == 1) {
-      printer.printHistory(roundCount, thePlayer.getPlayerHistory(), compareAnswers.getCorrectPlaceAndValue(), compareAnswers.getCorrectValueWrongPlace());
+      ui.displayHistory(roundCount, thePlayer.getPlayerHistory(), compareAnswers.getCorrectPlaceAndValue(), compareAnswers.getCorrectValueWrongPlace());
     }
   }
 
@@ -95,21 +95,21 @@ public class GameEngine {
 
     while (!hasWon) {
 
-      printer.printPlayerturn();
+      ui.displayPlayerturn();
 
       if (roundCount != 0) {
         displayHistory();
       }
 
-      printer.printEnterNumbers();
+      ui.displayEnterNumbers();
       playerSetThePlayerAnswerArray();
 
       hasWon = compareAnswers.isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
 
       if (roundCount == 10) {
-        printer.displayPlayerLost();
+        ui.displayPlayerLost();
       } else if (hasWon) {
-        printer.youWin();
+        ui.displayYouWin();
       } else {
         findMatchesInPositionsAndValues();
         findMathcesInCorrectValuesOnly();
@@ -125,13 +125,13 @@ public class GameEngine {
 
   private void findMatchesInPositionsAndValues() {
     int correctMatches = compareAnswers.anyMatchesInPositionsAndValues(thePlayer, theComputer, roundCount);
-    printer.printMatchesPositionAndValue(correctMatches);
+    ui.displayMatchesPositionAndValue(correctMatches);
 
   }
 
   private void findMathcesInCorrectValuesOnly() {
     int correctValueCount = compareAnswers.anyMathcesInCorrectValuesOnly(roundCount, thePlayer);
-    printer.printMatchesValueOnly(correctValueCount);
+    ui.displayMatchesValueOnly(correctValueCount);
   }
 
   public static void main(String[] args) {

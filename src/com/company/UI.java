@@ -1,67 +1,66 @@
 package com.company;
 
-public class Print {
+public class UI {
 
-  Print() {
+  UI() {
 
   }
 
-  public void printTheCorretCode() {
-    betweenOptions();
+  public void displayTheCorretCode() {
+    displayBetweenOptions();
     System.out.println("You must first make the secret code." +
         "\nThe code consists of 4 digits, with a value between 1 and 4.");
-
   }
 
-  public void betweenOptions() {
+  public void displayBetweenOptions() {
     System.out.println();
     System.out.println("-".repeat(30));
     System.out.println();
   }
 
-  public void printMainMenu() {
+  public void displayMainMenu() {
     System.out.println("1: Play new game");
     System.out.println("2: End game");
     System.out.print("Enter choice here: ");
   }
 
-  public void startGameOptions() {
+  public void displayStartGameOptions() {
     System.out.println("You now have to decide, how the 4 diget secret code gets set.");
     System.out.println("1: You set the code");
     System.out.println("2: Let computer set the code");
     System.out.print("Enter choice here: ");
   }
 
-  public void chooseNumber(int number) {
+  public void displayChooseNumber(int number) {
     System.out.print("Enter the value of the " + (number + 1) + " diget out of 4: ");
   }
 
-  public void printPlayerturn() {
-    betweenOptions();
+  public void displayPlayerturn() {
+    displayBetweenOptions();
     System.out.println("Players turn");
   }
 
-  public void printEnterNumbers() {
+  public void displayEnterNumbers() {
     System.out.println();
     System.out.println("You can now try to guess the secret code.");
     System.out.println("Remember that the numbers are between 1 and 4.");
   }
 
-  public void youWin() {
-    betweenOptions();
+  public void displayYouWin() {
+    displayBetweenOptions();
     System.out.println("Congratulations! You guessed it!");
   }
 
-  public void printMatchesPositionAndValue(int number) {
+  public void displayMatchesPositionAndValue(int number) {
     System.out.println();
     System.out.println("You had " + number + " correct mathces in position and value.");
   }
 
-  public void printMatchesValueOnly(int number) {
+  public void displayMatchesValueOnly(int number) {
     System.out.println("You had " + number + " correct mathces in value only.");
   }
 
-  public void printHistory(int roundcount, int[][] playerHistory, int[] corretvalue, int[] correctplacement) {
+  public void displayHistory(int roundcount, int[][] playerHistory, int[] corretvalue, int[] correctplacement) {
     System.out.println();
     System.out.println("A correct placement/value = X and a corret value only = O ");
     for (int i = 0; i < roundcount; i++) {
