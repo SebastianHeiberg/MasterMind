@@ -3,16 +3,13 @@ package com.company;
 import java.util.Arrays;
 
 public class Compare {
-
-  private int[] theCorretAnswerValueCompare;
-  private int[] matchesArray;
-  private int[] correctPlaceAndValue;
-  private int[] correctValueWrongPlace;
+  private final int[] tempMatchesArray;
+  private final int[] correctPlaceAndValue;
+  private final int[] correctValueWrongPlace;
   private final int answerLength = 4;
 
-  public Compare () {
-    this.theCorretAnswerValueCompare = new int[4];
-    this.matchesArray = new int[4];
+  public Compare() {
+    this.tempMatchesArray = new int[4];
     this.correctPlaceAndValue = new int[10];
     this.correctValueWrongPlace = new int[10];
   }
@@ -24,35 +21,31 @@ public class Compare {
 
       if (theComputer.getTheCorretAnswer()[i] == thePlayer.getPlayerAnswer()[i]) {
         correctMatches += 1;
-        matchesArray[i] = 0;
-        theCorretAnswerValueCompare[i] = -1;
+        tempMatchesArray[i] = 0;
       } else {
-        matchesArray[i] = thePlayer.getPlayerAnswer()[i];
-        theCorretAnswerValueCompare[i] = theComputer.getTheCorretAnswer()[i];
+        tempMatchesArray[i] = (theComputer.getTheCorretAnswer()[i]);
       }
     }
-
     correctPlaceAndValue[roundCount] = correctMatches;
     return correctMatches;
   }
 
-  public int anyMathcesInCorrectValuesOnly(int roundCount) {
-    boolean dontRepeatCount;
+  public int anyMathcesInCorrectValuesOnly(int roundCount, Player thePlayer) {
+
     int correctValueCount = 0;
+    boolean onlyCountANumberOnce;
 
     for (int i = 0; i < answerLength; i++) {
-      dontRepeatCount = true;
+      onlyCountANumberOnce = true;
       for (int j = 0; j < answerLength; j++) {
 
-        if (matchesArray[j] == theCorretAnswerValueCompare[i] & dontRepeatCount) {
-          correctValueCount += 1;
-          theCorretAnswerValueCompare[i] = -1;
-          matchesArray[j] = 0;
-          dontRepeatCount = false;
+        if (thePlayer.getPlayerAnswer()[i] == tempMatchesArray[j] && onlyCountANumberOnce) {
+          correctValueCount++;
+          tempMatchesArray[j] = 0;
+          onlyCountANumberOnce = false;
         }
       }
     }
-
     correctValueWrongPlace[roundCount] = correctValueCount;
     return correctValueCount;
   }
@@ -67,10 +60,7 @@ public class Compare {
 
   public boolean isPlayerAnswerCorrect(int[] corretAnswerArray, int[] playerAnswerArray) {
 
-    if (Arrays.equals(corretAnswerArray, playerAnswerArray)) {
-      return true;
-    }
-    return false;
+    return Arrays.equals(corretAnswerArray, playerAnswerArray);
   }
 
 }

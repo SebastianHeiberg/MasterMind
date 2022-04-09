@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameEngine {
@@ -108,7 +107,7 @@ public class GameEngine {
       hasWon = compareAnswers.isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
 
       if (roundCount == 10) {
-        printer.playerLost();
+        printer.displayPlayerLost();
       } else if (hasWon) {
         printer.youWin();
       } else {
@@ -131,7 +130,7 @@ public class GameEngine {
   }
 
   private void findMathcesInCorrectValuesOnly() {
-    int correctValueCount = compareAnswers.anyMathcesInCorrectValuesOnly(roundCount);
+    int correctValueCount = compareAnswers.anyMathcesInCorrectValuesOnly(roundCount,thePlayer);
     printer.printMatchesValueOnly(correctValueCount);
   }
 

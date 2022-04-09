@@ -40,6 +40,7 @@ public class Print {
     betweenOptions();
     System.out.println("Players turn");
   }
+
   public void printEnterNumbers () {
     System.out.println();
     System.out.println("You can now try to guess the secret code.");
@@ -74,7 +75,8 @@ public class Print {
   public void displayHistory () {
     System.out.print("Enter 1 if you want to display round history, else enter 2 to guess again. ");
   }
-  public void playerLost () {
+
+  public void displayPlayerLost() {
     System.out.println("Game over");
   }
 
