@@ -43,6 +43,7 @@ public class Print {
   public void printEnterNumbers () {
     System.out.println();
     System.out.println("You can now try to guess the secret code.");
+    System.out.println("Remember that the numbers are between 1 and 4.");
   }
 
   public void youWin() {
