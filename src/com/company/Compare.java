@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class Compare {
 
   private int[] theCorretAnswerValueCompare;
@@ -62,4 +64,13 @@ public class Compare {
   public int[] getCorrectValueWrongPlace() {
     return correctValueWrongPlace;
   }
+
+  public boolean isPlayerAnswerCorrect(int[] corretAnswerArray, int[] playerAnswerArray) {
+
+    if (Arrays.equals(corretAnswerArray, playerAnswerArray)) {
+      return true;
+    }
+    return false;
+  }
+
 }

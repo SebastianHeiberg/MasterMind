@@ -105,7 +105,7 @@ public class GameEngine {
       printer.printEnterNumbers();
       playerSetThePlayerAnswerArray();
 
-      isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
+      hasWon = compareAnswers.isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
 
       if (roundCount == 10) {
         printer.playerLost();
@@ -117,13 +117,6 @@ public class GameEngine {
         thePlayer.addToPlayerHistory(roundCount);
         increaseRoundCount();
       }
-    }
-  }
-
-  private void isPlayerAnswerCorrect(int[] corretAnswerArray, int[] playerAnswerArray) {
-
-    if (Arrays.equals(corretAnswerArray, playerAnswerArray)) {
-      hasWon = true;
     }
   }
 
@@ -141,7 +134,6 @@ public class GameEngine {
     int correctValueCount = compareAnswers.anyMathcesInCorrectValuesOnly(roundCount);
     printer.printMatchesValueOnly(correctValueCount);
   }
-
 
   public static void main(String[] args) {
     GameEngine obj = new GameEngine();
