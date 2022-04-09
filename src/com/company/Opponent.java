@@ -4,8 +4,7 @@ public class Opponent {
 
   public int[] theCorretAnswer;
 
-
-  public Opponent () {
+  public Opponent() {
     this.theCorretAnswer = new int[4];
   }
 
@@ -19,7 +18,6 @@ public class Opponent {
   public void manualySetTheCorrectAnswerArray(int index, int value) {
     theCorretAnswer[index] = value;
   }
-
 
   public int[] getTheCorretAnswer() {
     return theCorretAnswer;

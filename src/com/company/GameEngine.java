@@ -124,13 +124,13 @@ public class GameEngine {
   }
 
   private void findMatchesInPositionsAndValues() {
-    int correctMatches = compareAnswers.anyMatchesInPositionsAndValues(thePlayer,theComputer,roundCount);
+    int correctMatches = compareAnswers.anyMatchesInPositionsAndValues(thePlayer, theComputer, roundCount);
     printer.printMatchesPositionAndValue(correctMatches);
 
   }
 
   private void findMathcesInCorrectValuesOnly() {
-    int correctValueCount = compareAnswers.anyMathcesInCorrectValuesOnly(roundCount,thePlayer);
+    int correctValueCount = compareAnswers.anyMathcesInCorrectValuesOnly(roundCount, thePlayer);
     printer.printMatchesValueOnly(correctValueCount);
   }
 
