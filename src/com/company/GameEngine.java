@@ -10,7 +10,7 @@ public class GameEngine {
   public final Opponent theComputer = new Opponent();
   public final Compare compareAnswers = new Compare();
   public int roundCount = 0;
-  public final int roundLimit = 10;
+  public final int roundGameLimit = 10;
   public boolean hasWon = false;
 
   public void menu() {
@@ -83,7 +83,7 @@ public class GameEngine {
     }
   }
 
-  private void displayHistory() {
+  private void posibilityToShowGameHistory() {
     ui.displayHistory();
     int chooseAnswer = chooseAnswer();
     if (chooseAnswer == 1) {
@@ -98,22 +98,21 @@ public class GameEngine {
       ui.displayPlayerturn();
 
       if (roundCount != 0) {
-        displayHistory();
+        posibilityToShowGameHistory();
       }
 
       ui.displayEnterNumbers();
       playerSetThePlayerAnswerArray();
+      initalCompareOfAnswers();
 
-      hasWon = compareAnswers.isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
-
-      if (roundCount == 10) {
+      if (roundCount == roundGameLimit) {
         ui.displayPlayerLost();
       } else if (hasWon) {
         ui.displayYouWin();
       } else {
         findMatchesInPositionsAndValues();
         findMathcesInCorrectValuesOnly();
-        thePlayer.addToPlayerHistory(roundCount);
+        thePlayer.addAnswerToPlayerHistory(roundCount);
         increaseRoundCount();
       }
     }
@@ -121,6 +120,10 @@ public class GameEngine {
 
   private void increaseRoundCount() {
     roundCount++;
+  }
+
+  private void initalCompareOfAnswers(){
+    hasWon = compareAnswers.isPlayerAnswerCorrect(theComputer.getTheCorretAnswer(), thePlayer.getPlayerAnswer());
   }
 
   private void findMatchesInPositionsAndValues() {
